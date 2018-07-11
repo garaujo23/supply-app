@@ -7,10 +7,90 @@ class Home extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("DDILABS"),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blueGrey,
       ),
+
+      backgroundColor: Colors.black,
+
       body: new Container(
-        color: Colors.blue.shade200,
+        alignment: Alignment.topCenter,
+        child: new ListView(
+          padding: const EdgeInsets.all(5.6),
+          children: <Widget>[
+            new Padding(padding: const EdgeInsets.all(15.0)),
+            new Image.asset(
+              "images/758.png",
+              height: 133.0,
+              width: 200.0,
+              color: Colors.white,
+            ),
+            new Container(
+              //height: 250.0,
+              //color: Colors.grey,
+              child: new Column(
+                children: <Widget>[
+                  new Padding(padding: const EdgeInsets.all(20.0)),
+                  new Text("LOGIN",
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                    ),
+                  ),
+                  new Padding(padding: const EdgeInsets.all(14.0)),
+                  new InkWell(
+                    onTap: ()=> debugPrint("Customer Pressed"),
+                    child: new Container(
+                      height: 50.0,
+                      width:300.0 ,
+                      color: Colors.blueGrey.shade600,
+                      child: new Center(
+                        child: new Text("CUSTOMER",
+                          style: new TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  new Padding(padding: const EdgeInsets.all(14.0)),
+                  new Text("OR",
+                    style: new TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                      decoration: TextDecoration.lineThrough,
+                      decorationColor: Colors.white,
+                      decorationStyle: TextDecorationStyle.solid,
+                    ),
+                  ),
+                  new Padding(padding: const EdgeInsets.all(14.0)),
+                  new InkWell(
+                    onTap: ()=> debugPrint("Supplier Pressed"),
+                    child: new Container(
+                      height: 50.0,
+                      width:300.0 ,
+                      color: Colors.blueGrey.shade600,
+                      child: new Center(
+                        child: new Text("SUPPLIER",
+                          style: new TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         
       ),
 
