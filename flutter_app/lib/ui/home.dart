@@ -57,16 +57,36 @@ class Home extends StatelessWidget {
                     ),
                   ),
                   new Padding(padding: const EdgeInsets.all(14.0)),
-                  new Text("OR",
-                    style: new TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      decoration: TextDecoration.lineThrough,
-                      decorationColor: Colors.white,
-                      decorationStyle: TextDecorationStyle.solid,
-                    ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Text(
+                        "--------------------------------",
+                        style: new TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.white,
+                        ),
+                      ),
+                      new Padding(padding: const EdgeInsets.all(5.0)),
+                      new Text("OR",
+                        style: new TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                        ),
+                      ),
+                      new Padding(padding: const EdgeInsets.all(5.0)),
+                      new Text(
+                        "--------------------------------",
+                        style: new TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   new Padding(padding: const EdgeInsets.all(14.0)),
                   new InkWell(
