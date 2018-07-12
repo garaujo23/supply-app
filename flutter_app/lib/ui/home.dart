@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
       body: new Container(
         alignment: Alignment.topCenter,
         child: new ListView(
-          padding: const EdgeInsets.all(5.6),
+          padding: const EdgeInsets.all(7.0),
           children: <Widget>[
             new Padding(padding: const EdgeInsets.all(15.0)),
             new Image.asset(
@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
               //color: Colors.grey,
               child: new Column(
                 children: <Widget>[
-                  new Padding(padding: const EdgeInsets.all(20.0)),
+                  new Padding(padding: const EdgeInsets.all(30.0)),
                   new Text("LOGIN",
                     style: new TextStyle(
                       fontSize: 20.0,
