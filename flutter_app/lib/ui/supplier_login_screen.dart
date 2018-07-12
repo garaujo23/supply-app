@@ -51,7 +51,7 @@ class _SupplierLoginScreenState extends State<SupplierLoginScreen> {
                   new TextField(
                     controller: _supplierNameController,
                     decoration: new InputDecoration(
-                        hintText: "Username", icon: new Icon(Icons.person)),
+                        hintText: "Supplier ID", icon: new Icon(Icons.person)),
                   ),
                   new TextField(
                     controller: _supplierPasswordController,

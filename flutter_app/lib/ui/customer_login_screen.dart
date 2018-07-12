@@ -51,7 +51,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                   new TextField(
                     controller: _customerNameController,
                     decoration: new InputDecoration(
-                        hintText: "Username", icon: new Icon(Icons.person)),
+                        hintText: "Customer ID", icon: new Icon(Icons.person)),
                   ),
                   new TextField(
                     controller: _customerPasswordController,
