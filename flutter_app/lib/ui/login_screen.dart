@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 
-class CustomerLoginScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
+  var type;
+  LoginScreen({
+    this.type
+  });
+
   @override
-  _CustomerLoginScreenState createState() => _CustomerLoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
-  final TextEditingController _customerNameController =
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _NameController =
   new TextEditingController();
-  final TextEditingController _customerPasswordController =
+  final TextEditingController _PasswordController =
   new TextEditingController();
 
   void _erase() {
     setState(() {
-      _customerNameController.clear();
-      _customerPasswordController.clear();
+      _NameController.clear();
+      _PasswordController.clear();
     });
   }
 
@@ -22,7 +27,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Customer Login"),
+        title: new Text("${widget.type.toString()} Login"),
         backgroundColor: Colors.blueGrey,
         centerTitle: true,
       ),
@@ -49,12 +54,12 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                 children: <Widget>[
                   new Padding(padding: const EdgeInsets.all(4.0)),
                   new TextField(
-                    controller: _customerNameController,
+                    controller: _NameController,
                     decoration: new InputDecoration(
-                        hintText: "Customer ID", icon: new Icon(Icons.person)),
+                        hintText: "${widget.type.toString()} ID", icon: new Icon(Icons.person)),
                   ),
                   new TextField(
-                    controller: _customerPasswordController,
+                    controller: _PasswordController,
                     decoration: new InputDecoration(
                       hintText: "Password",
                       icon: new Icon(Icons.lock),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../ui/customer_login_screen.dart';
-import '../ui/supplier_login_screen.dart';
+import '../ui/login_screen.dart';
+
+String userType = "";
 
 class Home extends StatelessWidget {
   @override
@@ -26,8 +27,6 @@ class Home extends StatelessWidget {
               color: Colors.white,
             ),
             new Container(
-              //height: 250.0,
-              //color: Colors.grey,
               child: new Column(
                 children: <Widget>[
                   new Padding(padding: const EdgeInsets.all(30.0)),
@@ -43,10 +42,12 @@ class Home extends StatelessWidget {
                   new Padding(padding: const EdgeInsets.all(14.0)),
                   new InkWell(
                     onTap: () {
+                      userType = "Customer";
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CustomerLoginScreen()));
+                              builder: (context) =>
+                                  LoginScreen(type: userType)));
                     },
                     child: new Container(
                       height: 50.0,
@@ -99,11 +100,13 @@ class Home extends StatelessWidget {
                   ),
                   new Padding(padding: const EdgeInsets.all(14.0)),
                   new InkWell(
-                    onTap:  () {
+                    onTap: () {
+                      userType = "Supplier";
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SupplierLoginScreen()));
+                              builder: (context) =>
+                                  LoginScreen(type: userType)));
                     },
                     child: new Container(
                       height: 50.0,
