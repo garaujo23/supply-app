@@ -11,15 +11,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _NameController =
+  final TextEditingController _nameController =
   new TextEditingController();
-  final TextEditingController _PasswordController =
+  final TextEditingController _passwordController =
   new TextEditingController();
 
   void _erase() {
     setState(() {
-      _NameController.clear();
-      _PasswordController.clear();
+      _nameController.clear();
+      _passwordController.clear();
     });
   }
 
@@ -54,12 +54,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   new Padding(padding: const EdgeInsets.all(4.0)),
                   new TextField(
-                    controller: _NameController,
+                    controller: _nameController,
                     decoration: new InputDecoration(
                         hintText: "${widget.type.toString()} ID", icon: new Icon(Icons.person)),
                   ),
                   new TextField(
-                    controller: _PasswordController,
+                    controller: _passwordController,
                     decoration: new InputDecoration(
                       hintText: "Password",
                       icon: new Icon(Icons.lock),
