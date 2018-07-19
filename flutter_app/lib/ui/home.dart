@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/create_account_screen.dart';
 
 import '../ui/login_screen.dart';
 
@@ -121,6 +122,23 @@ class Home extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
+                      ),
+                    ),
+                  ),
+                  new Padding(padding: const EdgeInsets.all(14.0)),
+                  new FlatButton(
+                    color: Colors.white,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreateAccountScreen()));
+                    },
+                    child: Text(
+                      "CREATE ACCOUNT",
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
