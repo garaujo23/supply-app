@@ -29,6 +29,7 @@ class Home extends StatelessWidget {
             ),
             new Container(
               child: new Column(
+               // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   new Padding(padding: const EdgeInsets.all(30.0)),
                   new Text(
@@ -39,8 +40,10 @@ class Home extends StatelessWidget {
                       color: Colors.white,
                       fontStyle: FontStyle.normal,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   new Padding(padding: const EdgeInsets.all(14.0)),
+
                   new InkWell(
                     onTap: () {
                       userType = "Customer";
@@ -125,7 +128,7 @@ class Home extends StatelessWidget {
                       ),
                     ),
                   ),
-                  new Padding(padding: const EdgeInsets.all(14.0)),
+                  new Padding(padding: const EdgeInsets.all(20.0)),
                   new FlatButton(
                     color: Colors.white,
                     onPressed: () {
