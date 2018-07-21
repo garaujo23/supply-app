@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
 import '../model/user.dart';
 import '../ui/login_screen.dart';
 
@@ -16,6 +17,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   User user;
   final FirebaseDatabase database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final snackBar = new SnackBar(content: Text("Processing Data"));
   DatabaseReference databaseReference;
   int radioValue = 0;
 
@@ -33,9 +36,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
       switch (radioValue) {
         case 0:
-          user.userType = "Customer";
           break;
         case 1:
+          user.userType = "Customer";
+          break;
+        case 2:
           user.userType = "Supplier";
           break;
       }
@@ -45,6 +50,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Create Account"),
         centerTitle: true,
@@ -109,7 +115,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               children: <Widget>[
                                 new Radio(
                                   activeColor: Colors.blueGrey,
-                                  value: 0,
+                                  value: 1,
                                   groupValue: radioValue,
                                   onChanged: handleRadioValueChanged,
                                 ),
@@ -131,7 +137,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               children: <Widget>[
                                 new Radio<int>(
                                     activeColor: Colors.blueGrey,
-                                    value: 1,
+                                    value: 2,
                                     groupValue: radioValue,
                                     onChanged: handleRadioValueChanged),
                                 new Text(
@@ -189,9 +195,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               ),
                             ),
                           ),
-
                           RaisedButton(
-                            onPressed: () => _createUser(),
+                            onPressed: () {
+                              _createUser();
+                              _scaffoldKey.currentState.showSnackBar(snackBar);
+                            },
                             // When create is pressed this function is called
                             color: Colors.blueGrey,
                             child: new Text(
@@ -223,9 +231,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   // Creating the account and authenticating the user
   void _createUser() async {
     final FormState form = formKey.currentState;
+
     // checks if all fields in the form is entered correctly
-    if (form.validate()) {
-      SnackBar(content: Text("Processing Data"));
+    if (form.validate() && radioValue > 0) {
       form.save(); // saves the form
       //Authenticates the user and checks that the email address has not been used before. If authentication is ok, writes information to the database
       FirebaseUser userAccount = await _auth
@@ -241,12 +249,26 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     LoginScreen(type: user.userType))); //goes to log in screen
       }).catchError((error) {
         // if email is already used to create account, displays error message
-        _showEmailErrorDialog();
+        _errorDialog("Email Taken");
       });
+    } else {
+      _errorDialog("User Type");
     }
   }
 
-  void _showEmailErrorDialog() {
+  void _errorDialog(String error) {
+    String title = "";
+    String message = "";
+
+    if (error == "Email Taken") {
+      title = "ERROR!";
+      message =
+          "Email address already in Use. Please choose a different email address!";
+    } else if (error == "User Type") {
+      title = "User type error!";
+      message = "Please select if customer or supplier";
+    }
+
     var alert = AlertDialog(
       content: Container(
         height: 120.0,
@@ -255,7 +277,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "ERROR!",
+              title,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w600,
@@ -265,7 +287,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             new Padding(padding: const EdgeInsets.all(6.0)),
             Expanded(
               child: Text(
-                "Email address already in Use. Please choose a different email address!",
+                message,
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,

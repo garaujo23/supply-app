@@ -7,9 +7,6 @@ void main() {
   runApp(new MaterialApp(
     title: "ddilabs",
     home: Home(),
-    routes: {
-    //  "/Home": (_) => new Home(),
-    },
   ));
 }
 
