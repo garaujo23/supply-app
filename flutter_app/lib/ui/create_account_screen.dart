@@ -226,6 +226,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     final FormState form = formKey.currentState;
     // checks if all fields in the form is entered correctly
     if (form.validate()) {
+      SnackBar(content: Text("Processing Data"));
       form.save(); // saves the form
       //Authenticates the user and checks that the email address has not been used before. If authentication is ok, writes information to the database
       FirebaseUser userAccount = await _auth
