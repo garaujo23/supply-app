@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
 import '../model/user.dart';
 import '../ui/login_screen.dart';
 
@@ -235,7 +234,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           .then((userNew) {
         databaseReference.push().set(user.toJson()); //writes info to database
         form.reset(); //resets the form
-        Navigator.push(
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) =>
