@@ -1,4 +1,3 @@
-import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -244,7 +243,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         // if email is already used to create account, displays error message
         _errorDialog("Email Taken");
       });
-      //makes the authId the database ID
+      //makes the authId the database ID and stores info into database
       databaseReference.child("${userAccount.uid}").set(user.toJson());
       //databaseReference.push().set(user.toJson());
       form.reset(); //resets the form

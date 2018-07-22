@@ -150,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void checkUserType(FirebaseUser currentUser) {
+    //Gets the database values of the user signing in ONCE only
     database
         .reference()
         .child("Users")
@@ -157,9 +158,10 @@ class _LoginScreenState extends State<LoginScreen> {
         .once()
         .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> data = snapshot.value;
-
+// Checking to see if the user type is the same as the login type the user selected
       if (snapshot.value['User Type'] == widget.type.toString()) {
         if (widget.type.toString() == "Customer") {
+          // creating a new route so user cannot go back but instead will have to log out
           Navigator.of(context).pushNamedAndRemoveUntil(
               '/customerHome', (Route<dynamic> route) => false);
         } else {
