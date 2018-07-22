@@ -158,8 +158,6 @@ class _LoginScreenState extends State<LoginScreen> {
         .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> data = snapshot.value;
 
-      print("${snapshot.value['User Type']}");
-
       if (snapshot.value['User Type'] == widget.type.toString()) {
         if (widget.type.toString() == "Customer") {
           Navigator.of(context).pushNamedAndRemoveUntil(
@@ -180,15 +178,14 @@ class _LoginScreenState extends State<LoginScreen> {
     String title = "";
     String message = "";
 
-    if (error == "Username/password cannot be blank!") {
+    if (error == "Username/password cannot be blank") {
       title = "ERROR!";
       message =
-      "Username or Password cannot be blank";
+      "Username or Password cannot be blank!";
     } else if (error == "Invalid Username/password") {
       title = "ERROR!";
       message = "Invalid username or password!";
     }
-
 
     var alert = AlertDialog(
       content: Container(
