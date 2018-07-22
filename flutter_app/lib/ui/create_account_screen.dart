@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final FirebaseDatabase database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final snackBar = new SnackBar(content: Text("Processing Data"));
+  final snackBar = new SnackBar(content: Text("Creating user account"));
   DatabaseReference databaseReference;
   int radioValue = 0;
 
@@ -27,7 +29,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     super.initState();
 
     user = User("", "", "", "", "", "");
-    databaseReference = database.reference().child("App_Users");
+    databaseReference = database.reference().child("Users");
   }
 
   void handleRadioValueChanged(int value) {
@@ -231,7 +233,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   // Creating the account and authenticating the user
   void _createUser() async {
     final FormState form = formKey.currentState;
-
     // checks if all fields in the form is entered correctly
     if (form.validate() && radioValue > 0) {
       form.save(); // saves the form
@@ -239,18 +240,18 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       FirebaseUser userAccount = await _auth
           .createUserWithEmailAndPassword(
               email: "${user.emailAddress}", password: "${user.password}")
-          .then((userNew) {
-        databaseReference.push().set(user.toJson()); //writes info to database
-        form.reset(); //resets the form
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    LoginScreen(type: user.userType))); //goes to log in screen
-      }).catchError((error) {
+          .catchError((error) {
         // if email is already used to create account, displays error message
         _errorDialog("Email Taken");
       });
+      //makes the authId the database ID
+      databaseReference.child("${userAccount.uid}").set(user.toJson());
+      //databaseReference.push().set(user.toJson());
+      form.reset(); //resets the form
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => LoginScreen(type: user.userType)));
     } else {
       _errorDialog("User Type");
     }

@@ -9,7 +9,7 @@ class User {
   String userType;
   String password;
 
-  User(this.firstName, this.lastName, this.companyName, this.emailAddress,
+  User( this.firstName, this.lastName, this.companyName, this.emailAddress,
       this.userType, this.password);
 
   User.fromSnapshot(DataSnapshot snapshot)
