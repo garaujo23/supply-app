@@ -27,7 +27,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   void initState() {
     super.initState();
 
-    user = User("", "", "", "", "", "");
+    user = User("", "", "", "", "","");
     databaseReference = database.reference().child("Users");
   }
 
@@ -244,6 +244,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         _errorDialog("Email Taken");
       });
       //makes the authId the database ID and stores info into database
+      UserUpdateInfo().displayName = user.firstName + user.lastName;
+      userAccount.sendEmailVerification();
+      //userAccount.sendEmailVerification();
       databaseReference.child("${userAccount.uid}").set(user.toJson());
       //databaseReference.push().set(user.toJson());
       form.reset(); //resets the form

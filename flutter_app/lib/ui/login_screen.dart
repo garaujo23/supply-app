@@ -11,6 +11,9 @@ class LoginScreen extends StatefulWidget {
 
   LoginScreen({this.type});
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final snackBar = new SnackBar(content: Text("Signing in!"));
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -21,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseDatabase database = FirebaseDatabase.instance;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final snackBar = new SnackBar(content: Text("Processing Data"));
+  final snackBar = new SnackBar(content: Text("Signing in!"));
 
   final TextEditingController _nameController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
@@ -83,15 +86,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   new Center(
                     child: new Row(
-                      //mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         //Login Button
                         new Container(
-                          margin: const EdgeInsets.only(left: 40.0),
+                          //margin: const EdgeInsets.only(left: 40.0),
                           child: new RaisedButton(
 //                            onPressed: () => debugPrint ("Login Pressed"),
                             onPressed: () {
-                              //_scaffoldKey.currentState.showSnackBar(snackBar);
+                              _scaffoldKey.currentState.showSnackBar(snackBar);
                               _logInUser();
                             },
                             color: Colors.blueGrey,
@@ -107,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         //Clear Button
                         new Container(
-                          margin: const EdgeInsets.only(left: 120.0),
+                          //margin: const EdgeInsets.only(left: 120.0),
                           child: new RaisedButton(
                             onPressed: _erase,
                             color: Colors.blueGrey,
@@ -124,6 +127,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
+                  new Padding(padding: new EdgeInsets.all(4.0)),
+                  new InkWell(
+                    onTap: () {
+                      _passwordReset();
+                    },
+                    child: Text(
+                      "Forgot Password",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w300,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -133,24 +152,36 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  _logInUser() async {
+  void _logInUser() async {
+    DatabaseReference databaseReference = database.reference().child("Users");
     if (_nameController.text == "" || _passwordController.text == "") {
       _errorDialog("Username/password cannot be blank");
     } else {
-      _auth
+      FirebaseUser signInUser = await _auth
           .signInWithEmailAndPassword(
-          email: _nameController.text, password: _passwordController.text)
+              email: _nameController.text, password: _passwordController.text)
           .catchError((error) {
-
+        _errorDialog("Invalid Username/password");
       });
+      await signInUser.reload();
+      signInUser.getIdToken(refresh: true);
       _auth.currentUser().then((currentUser) {
-        checkUserType(currentUser);
+        if (currentUser.isEmailVerified) {
+          //If user has reset password, update the database to the new password
+          //update password if user has reset it
+          databaseReference.child(currentUser.uid).child("Password").set(_passwordController.text);
+          checkUserType(currentUser);
+        } else {
+          currentUser.sendEmailVerification();
+          _errorDialog("Email Address not verified");
+        }
       });
     }
   }
 
   void checkUserType(FirebaseUser currentUser) {
     //Gets the database values of the user signing in ONCE only
+
     database
         .reference()
         .child("Users")
@@ -158,6 +189,9 @@ class _LoginScreenState extends State<LoginScreen> {
         .once()
         .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> data = snapshot.value;
+
+
+
 // Checking to see if the user type is the same as the login type the user selected
       if (snapshot.value['User Type'] == widget.type.toString()) {
         if (widget.type.toString() == "Customer") {
@@ -182,11 +216,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (error == "Username/password cannot be blank") {
       title = "ERROR!";
-      message =
-      "Username or Password cannot be blank!";
+      message = "Username or Password cannot be blank!";
     } else if (error == "Invalid Username/password") {
       title = "ERROR!";
       message = "Invalid username or password!";
+    } else if (error == "Email Address not verified") {
+      title = "ERROR!";
+      message = "Please verify email address first!";
     }
 
     var alert = AlertDialog(
@@ -239,4 +275,58 @@ class _LoginScreenState extends State<LoginScreen> {
           return alert;
         });
   }
+
+  void _passwordReset() async {
+    final snackBar1 = new SnackBar(
+        content: Text("Please check your email to reset password"));
+    var alert = AlertDialog(
+      content: Container(
+        height: 120.0,
+        width: 305.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Please enter your email address:",
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+            new Padding(padding: const EdgeInsets.all(4.0)),
+            new TextField(
+              controller: _nameController,
+              decoration: new InputDecoration(
+                  hintText: "${widget.type.toString()} ID",
+                  icon: new Icon(Icons.person)),
+            ),
+            new Padding(padding: const EdgeInsets.all(6.0)),
+            FlatButton(
+              color: Colors.blueGrey,
+              onPressed: () {
+                Navigator.pop(context);
+                _auth.sendPasswordResetEmail(email: _nameController.text);
+                _scaffoldKey.currentState.showSnackBar(snackBar1);
+              },
+              child: Text(
+                "Reset",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    showDialog(
+        context: context,
+        builder: (_) {
+          return alert;
+        });
+  }
+
 }
