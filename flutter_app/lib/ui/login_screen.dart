@@ -163,13 +163,19 @@ class _LoginScreenState extends State<LoginScreen> {
           .catchError((error) {
         _errorDialog("Invalid Username/password");
       });
+      // reloads to check if email verification is completed before signing users in
       await signInUser.reload();
       signInUser.getIdToken(refresh: true);
+
+      //User sign in process
       _auth.currentUser().then((currentUser) {
         if (currentUser.isEmailVerified) {
           //If user has reset password, update the database to the new password
           //update password if user has reset it
-          databaseReference.child(currentUser.uid).child("Password").set(_passwordController.text);
+          databaseReference
+              .child(currentUser.uid)
+              .child("Password")
+              .set(_passwordController.text);
           checkUserType(currentUser);
         } else {
           currentUser.sendEmailVerification();
@@ -190,8 +196,6 @@ class _LoginScreenState extends State<LoginScreen> {
         .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> data = snapshot.value;
 
-
-
 // Checking to see if the user type is the same as the login type the user selected
       if (snapshot.value['User Type'] == widget.type.toString()) {
         if (widget.type.toString() == "Customer") {
@@ -206,6 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _errorDialog("Invalid Username/password");
         _nameController.clear();
         _passwordController.clear();
+        FirebaseAuth.instance.signOut();
       }
     });
   }
@@ -328,5 +333,4 @@ class _LoginScreenState extends State<LoginScreen> {
           return alert;
         });
   }
-
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SupplierHome extends StatelessWidget {
   @override
@@ -11,6 +12,7 @@ class SupplierHome extends StatelessWidget {
       ),
       body: FlatButton(
         onPressed: () {
+          FirebaseAuth.instance.signOut();
           Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
         },
         child: Text("To Home"),
