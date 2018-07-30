@@ -10,12 +10,47 @@ class SupplierHome extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.blueGrey,
       ),
-      body: FlatButton(
-        onPressed: () {
-          FirebaseAuth.instance.signOut();
-          Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-        },
-        child: Text("To Home"),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Menu"),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey,
+              ),
+              margin: EdgeInsets.only(bottom: 10.0),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.map),
+              title: Text("Maps"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.feedback),
+              title: Text("Feedback"),
+              onTap: () {
+                Navigator.pop(context);
+
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.lock),
+              title: Text("Logout"),
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/home', (Route<dynamic> route) => false);
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Container(
+        color: Colors.deepOrange.shade100,
       ),
     );
   }
