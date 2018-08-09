@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
               '/supplierHome', (Route<dynamic> route) => false);
         }
       } else {
-        _errorDialog("Invalid Username/password");
+        _errorDialog(snapshot.value['User Type']);
         _nameController.clear();
         _passwordController.clear();
         FirebaseAuth.instance.signOut();
@@ -228,6 +228,12 @@ class _LoginScreenState extends State<LoginScreen> {
     } else if (error == "Email Address not verified") {
       title = "ERROR!";
       message = "Please verify email address first!";
+    } else if (error == "Customer") {
+      title = "ERROR!";
+      message = "Please go back and sign in through the customer portal!";
+    }else if (error == "Supplier") {
+      title = "ERROR!";
+      message = "Please go back and sign in through the supplier portal!";
     }
 
     var alert = AlertDialog(
