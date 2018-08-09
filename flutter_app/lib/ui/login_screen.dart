@@ -7,7 +7,7 @@ import '../model/user.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class LoginScreen extends StatefulWidget {
-  var type;
+  final type;
 
   LoginScreen({this.type});
 
@@ -29,12 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _nameController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
 
-  void _erase() {
+  /*void _erase() {
     setState(() {
       _nameController.clear();
       _passwordController.clear();
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -61,22 +61,22 @@ class _LoginScreenState extends State<LoginScreen> {
             //Form
             new Padding(padding: const EdgeInsets.all(20.0)),
             new Container(
-              height: 180.0,
+              height: 240.0,
               width: 380.0,
               color: Colors.blueGrey.shade50,
-              child: new Column(
+              child: new ListView(
                 children: <Widget>[
                   new Padding(padding: const EdgeInsets.all(4.0)),
                   new TextField(
                     controller: _nameController,
                     decoration: new InputDecoration(
-                        hintText: "${widget.type.toString()} ID",
+                        labelText: "${widget.type.toString()} Email",
                         icon: new Icon(Icons.person)),
                   ),
                   new TextField(
                     controller: _passwordController,
                     decoration: new InputDecoration(
-                      hintText: "Password",
+                      labelText: "Password",
                       icon: new Icon(Icons.lock),
                     ),
                     obscureText: true,
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         //Clear Button
-                        new Container(
+                        /*new Container(
                           //margin: const EdgeInsets.only(left: 120.0),
                           child: new RaisedButton(
                             onPressed: _erase,
@@ -123,11 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
-                  new Padding(padding: new EdgeInsets.all(4.0)),
+                  new Padding(padding: new EdgeInsets.all(10.0)),
                   new InkWell(
                     onTap: () {
                       _passwordReset();
