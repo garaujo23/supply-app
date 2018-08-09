@@ -80,11 +80,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     ListTile(
                       leading: Icon(Icons.person),
                       title: TextFormField(
+                        autofocus: true,
                         initialValue: "",
                         onSaved: (val) => user.firstName = val,
                         validator: (val) =>
                             val == "" ? 'first name required' : null,
-                        decoration: InputDecoration(hintText: "First Name *"),
+                        decoration: InputDecoration(labelText: "First Name *"),
                       ),
                     ),
                     ListTile(
@@ -94,7 +95,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         onSaved: (val) => user.lastName = val,
                         validator: (val) =>
                             val == "" ? 'Last name required' : null,
-                        decoration: InputDecoration(hintText: "Last Name *"),
+                        decoration: InputDecoration(labelText: "Last Name *"),
                       ),
                     ),
                     ListTile(
@@ -104,7 +105,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         onSaved: (val) => user.companyName = val,
                         validator: (val) =>
                             val == "" ? 'Company name required' : null,
-                        decoration: InputDecoration(hintText: "Company Name *"),
+                        decoration: InputDecoration(labelText: "Company Name *"),
                       ),
                     ),
                     Row(
@@ -158,12 +159,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     ListTile(
                       leading: Icon(Icons.email),
                       title: TextFormField(
+                        keyboardType: TextInputType.emailAddress,
                         initialValue: "",
                         onSaved: (val) => user.emailAddress = val,
                         validator: (val) =>
                             val == "" ? 'Email address required' : null,
                         decoration:
-                            InputDecoration(hintText: "Email Address *"),
+                            InputDecoration(labelText: "Email Address *"),
                       ),
                     ),
                     ListTile(
@@ -174,7 +176,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         validator: (val) => val.length < 8
                             ? 'password needs to be 8 characters long'
                             : null,
-                        decoration: InputDecoration(hintText: "Password *"),
+                        decoration: InputDecoration(labelText: "Password *"),
                         obscureText: true,
                       ),
                     ),
@@ -186,7 +188,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           //Login Button
                           RaisedButton(
                             onPressed: () => _cancelCreate(),
-                            color: Colors.blueGrey,
+                            color: Colors.redAccent,
                             child: new Text(
                               "Cancel",
                               style: new TextStyle(
