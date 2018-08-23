@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'dart:async';
 
+//import 'package:map_view/map_view.dart';
+
 class CustomerHome extends StatelessWidget{
-  var currentLocation = <String, double> {};
-  var location = new Location();
+  final currentLocation = <String, double> {};
+  //final location = new Location();
+  //final _mapView = new MapView();
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class CustomerHome extends StatelessWidget{
       appBar: AppBar(
         title: Text("Customer Home"),
         centerTitle: true,
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       drawer: Drawer(
         child: ListView(
@@ -22,7 +25,7 @@ class CustomerHome extends StatelessWidget{
             DrawerHeader(
               child: Text("Menu"),
               decoration: BoxDecoration(
-                color: Colors.blueGrey,
+                color: Theme.of(context).primaryColor,
               ),
               margin: EdgeInsets.only(bottom: 10.0),
             ),
@@ -39,7 +42,6 @@ class CustomerHome extends StatelessWidget{
               title: Text("Feedback"),
               onTap: () {
                 Navigator.pop(context);
-
               },
             ),
             ListTile(
@@ -57,13 +59,14 @@ class CustomerHome extends StatelessWidget{
       body:Container(
         color: Colors.deepPurple.shade100,
         child: Text("Current Location: "),
-
       ),
 
     );
   }
 
-
+  /*void showMap() {
+    _mapView.show(new MapOptions(showUserLocation: true));
+  }*/
 
 
 }

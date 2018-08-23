@@ -55,7 +55,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       appBar: AppBar(
         title: Text("Create Account"),
         centerTitle: true,
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(
         alignment: Alignment.topCenter,

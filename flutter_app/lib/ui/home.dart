@@ -12,7 +12,6 @@ class Home extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("DDILABS"),
         centerTitle: true,
-        backgroundColor: Colors.blueGrey,
       ),
       backgroundColor: Colors.black,
       body: new Container(
@@ -43,7 +42,6 @@ class Home extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   new Padding(padding: const EdgeInsets.all(14.0)),
-
                   new InkWell(
                     onTap: () {
                       userType = "Customer";

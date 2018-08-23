@@ -42,7 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
       key: _scaffoldKey,
       appBar: new AppBar(
         title: new Text("${widget.type.toString()} Login"),
-        backgroundColor: Colors.blueGrey,
         centerTitle: true,
       ),
       backgroundColor: Colors.black,
@@ -68,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   new Padding(padding: const EdgeInsets.all(4.0)),
                   new TextField(
+                    keyboardType: TextInputType.emailAddress ,
                     controller: _nameController,
                     decoration: new InputDecoration(
                         labelText: "${widget.type.toString()} Email",
