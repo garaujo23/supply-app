@@ -8,7 +8,7 @@ import './ui/supplier_home_screen.dart';
 import './ui/add_customer.dart';
 
 
-const API_KEY = "AIzaSyAV47UrC6UkS9evW3msP-XGXNzTRkhS8mo";
+const API_KEY = "";
 
 void main() {
   //Use for debugging UI
