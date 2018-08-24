@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import './add_customer.dart';
+import '../ui/login_screen.dart';
+
+String uID = userUid;
 
 class SupplierHome extends StatelessWidget {
   @override
@@ -17,7 +20,14 @@ class SupplierHome extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                child: Text("Menu"),
+                child: Text(
+                  "${data['First Name']} ${data['Last Name']} \n ${data['Company Name']} \n ${data['Company Address']}",
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                 ),

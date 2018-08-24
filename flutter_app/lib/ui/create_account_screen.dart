@@ -27,7 +27,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   void initState() {
     super.initState();
 
-    user = User("", "", "", "", "","");
+    user = User("", "", "", "", "","","","");
     databaseReference = database.reference().child("Users");
   }
 
@@ -106,6 +106,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         validator: (val) =>
                             val == "" ? 'Company name required' : null,
                         decoration: InputDecoration(labelText: "Company Name *"),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.location_city),
+                      title: TextFormField(
+                        initialValue: "",
+                        onSaved: (val) => user.companyAddress = val,
+                        validator: (val) =>
+                        val == "" ? 'Company address required' : null,
+                        decoration: InputDecoration(labelText: "Company Address *"),
                       ),
                     ),
                     Row(
@@ -249,6 +259,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       //makes the authId the database ID and stores info into database
       userAccount.sendEmailVerification();
       //userAccount.sendEmailVerification();
+      user.uid = userAccount.uid;
       databaseReference.child("${userAccount.uid}").set(user.toJson());
       //databaseReference.push().set(user.toJson());
       form.reset(); //resets the form

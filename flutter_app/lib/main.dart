@@ -6,7 +6,10 @@ import './ui/create_account_screen.dart';
 import './ui/customer_home_screen.dart';
 import './ui/supplier_home_screen.dart';
 import './ui/add_customer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
+FirebaseUser currentUser;
 
 const API_KEY = "";
 

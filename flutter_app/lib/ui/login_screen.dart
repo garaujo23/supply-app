@@ -6,6 +6,8 @@ import '../model/user.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+String userUid;
+Map<dynamic, dynamic> data;
 class LoginScreen extends StatefulWidget {
   final type;
 
@@ -67,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   new Padding(padding: const EdgeInsets.all(4.0)),
                   new TextField(
-                    keyboardType: TextInputType.emailAddress ,
+                    keyboardType: TextInputType.emailAddress,
                     controller: _nameController,
                     decoration: new InputDecoration(
                         labelText: "${widget.type.toString()} Email",
@@ -166,7 +168,6 @@ class _LoginScreenState extends State<LoginScreen> {
       // reloads to check if email verification is completed before signing users in
       await signInUser.reload();
       signInUser.getIdToken(refresh: true);
-
       //User sign in process
       _auth.currentUser().then((currentUser) {
         if (currentUser.isEmailVerified) {
@@ -194,20 +195,21 @@ class _LoginScreenState extends State<LoginScreen> {
         .child(currentUser.uid)
         .once()
         .then((DataSnapshot snapshot) {
-      Map<dynamic, dynamic> data = snapshot.value;
-
+       data = snapshot.value;
 // Checking to see if the user type is the same as the login type the user selected
-      if (snapshot.value['User Type'] == widget.type.toString()) {
+      if (data['User Type'] == widget.type.toString()) {
         if (widget.type.toString() == "Customer") {
           // creating a new route so user cannot go back but instead will have to log out
           Navigator.of(context).pushNamedAndRemoveUntil(
               '/customerHome', (Route<dynamic> route) => false);
+          userUid = data['Uid'];
         } else {
           Navigator.of(context).pushNamedAndRemoveUntil(
               '/supplierHome', (Route<dynamic> route) => false);
+          userUid = data['Uid'];
         }
       } else {
-        _errorDialog(snapshot.value['User Type']);
+        _errorDialog(data['User Type']);
         _nameController.clear();
         _passwordController.clear();
         FirebaseAuth.instance.signOut();
@@ -231,7 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else if (error == "Customer") {
       title = "ERROR!";
       message = "Please go back and sign in through the customer portal!";
-    }else if (error == "Supplier") {
+    } else if (error == "Supplier") {
       title = "ERROR!";
       message = "Please go back and sign in through the supplier portal!";
     }
