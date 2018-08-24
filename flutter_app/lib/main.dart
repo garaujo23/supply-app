@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:map_view/map_view.dart';
+import 'package:map_view/map_view.dart';
 import './ui/home.dart';
 import './ui/login_screen.dart';
 import './ui/create_account_screen.dart';
@@ -11,9 +11,11 @@ import 'package:firebase_database/firebase_database.dart';
 
 FirebaseUser currentUser;
 
-const API_KEY = "";
+const API_KEY = "AIzaSyDtx4t0vM4bKCzDDQbMH-nTRNQbfWi5gsE";
 
 void main() {
+
+  MapView.setApiKey(API_KEY);
   //Use for debugging UI
   // debugPaintSizeEnabled = true;
   // debugPaintBaselinesEnabled = true;

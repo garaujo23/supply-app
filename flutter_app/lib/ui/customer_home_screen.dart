@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
+import '../ui/customer_map.dart';
 import '../ui/login_screen.dart';
 
 //import 'package:map_view/map_view.dart';
@@ -65,7 +65,11 @@ class CustomerHome extends StatelessWidget {
               leading: Icon(Icons.map),
               title: Text("Maps"),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CustomerMap()));
               },
             ),
             ListTile(
