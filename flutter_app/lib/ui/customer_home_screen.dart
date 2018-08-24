@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
 import '../ui/login_screen.dart';
 
-import '../model/user.dart';
-
 //import 'package:map_view/map_view.dart';
+
 String uID = userUid;
 
 class CustomerHome extends StatelessWidget {
@@ -21,27 +21,43 @@ class CustomerHome extends StatelessWidget {
       appBar: AppBar(
         title: Text("Customer Home"),
         centerTitle: true,
-        backgroundColor: Theme
-            .of(context)
-            .primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text(
-                    "${data['First Name']} ${data['Last Name']} \n ${data['Company Name']} \n ${data['Company Address']}",
+              padding: EdgeInsets.only(top: 10.0, left: 10.0),
+              child: ListView(
+                children: <Widget>[
+                  new Image.asset(
+                    'images/758.png',
+                    width: 60.0,
+                    height: 60.0,
+                    color: Colors.white,
+                  ),
+                  Padding(padding: const EdgeInsets.only(top: 10.0)),
+                  Text(
+                    "${data['First Name']} ${data['Last Name']} \n${data['Company Name']} \n${data['Company Address']}",
                     style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
+                ],
+              ),
+//              child: Text(
+//                    "${data['First Name']} ${data['Last Name']} \n${data['Company Name']} \n${data['Company Address']}",
+//                    style: TextStyle(
+//                      fontSize: 16.0,
+//                      fontWeight: FontWeight.w600,
+//                      color: Colors.white,
+//                    ),
+//                  ),
               decoration: BoxDecoration(
-                color: Theme
-                    .of(context)
-                    .primaryColor,
+                color: Theme.of(context).primaryColor,
               ),
               margin: EdgeInsets.only(bottom: 10.0),
             ),
@@ -80,6 +96,4 @@ class CustomerHome extends StatelessWidget {
     _mapView.show(new MapOptions(showUserLocation: true));
   }*/
   }
-
 }
-

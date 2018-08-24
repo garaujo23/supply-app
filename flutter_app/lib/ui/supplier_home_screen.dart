@@ -20,13 +20,24 @@ class SupplierHome extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                child: Text(
-                  "${data['First Name']} ${data['Last Name']} \n ${data['Company Name']} \n ${data['Company Address']}",
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
+                child: ListView(
+                  children: <Widget>[
+                    new Image.asset(
+                      'images/758.png',
+                      width: 60.0,
+                      height: 60.0,
+                      color: Colors.white,
+                    ),
+                    Padding(padding: const EdgeInsets.only(top: 10.0)),
+                    Text(
+                      "${data['First Name']} ${data['Last Name']} \n${data['Company Name']} \n${data['Company Address']}",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
