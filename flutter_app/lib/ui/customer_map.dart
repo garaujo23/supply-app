@@ -33,15 +33,14 @@ class _CustomerMapState extends State<CustomerMap> {
 //    cameraPosition = new CameraPosition(Locations.portland, 2.0);
 //    staticMapUri = staticMapProvider.getStaticUri(Locations.portland, 12,
 //        width: 900, height: 400, mapType: StaticMapViewType.roadmap);
-
   }
 
   void getStaticMap() async {
-    final String API_KEY = '';
+    // String API_KEY = ''; //This is already defined in main.dart so therefore do not need this here again
     final location = geoloc.Location();
     final currentLocation = await location.getLocation();
     //print(data['Company Address']); This prints null
-    final Uri uri = Uri.https('maps.googleapis.com', '/maps/api/geocode/json', {'address': '21/11 Glenvale Avenue Parklea NSW 2768', 'key': API_KEY}); //Address hardcoded for now until data issue sorted
+    final Uri uri = Uri.https('maps.googleapis.com', '/maps/api/geocode/json', {'address': '${data['Company Address']}', 'key': API_KEY}); //Address hardcoded for now until data issue sorted
     final http.Response response = await http.get(uri);
     final decodedResponse = json.decode(response.body);
     //print(decodedResponse);
@@ -52,15 +51,15 @@ class _CustomerMapState extends State<CustomerMap> {
     _locationData = LocationData(
       //You can toggle between user location and set location using geocode
         address: formattedAddress,
-        //latitude: coords['lat'],
-        latitude: currentLocation['latitude'],
-        //longitude: coords['lng']);
-        longitude: currentLocation['longitude']);
+        latitude: coords['lat'],
+        //latitude: currentLocation['latitude'],
+        longitude: coords['lng']);
+        //longitude: currentLocation['longitude']);
 
 
     final StaticMapProvider staticMapProvider = StaticMapProvider(API_KEY);
     final Uri staticMapUri = staticMapProvider.getStaticUriWithMarkers([
-      Marker('position', 'Position', _locationData.latitude, _locationData.longitude)
+      Marker('position', 'Position', _locationData.latitude, _locationData.longitude),
     ], center: Location(_locationData.latitude, _locationData.longitude),
     width: 900, height: 400,
     maptype: StaticMapViewType.roadmap);
