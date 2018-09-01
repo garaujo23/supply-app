@@ -11,7 +11,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 FirebaseUser currentUser;
 
-const API_KEY = "";
+const API_KEY = "AIzaSyAOmnNy5Tw3DVi1VHNr2UiRWiY3iv6ndLE";
 
 void main() {
 
