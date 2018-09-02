@@ -81,6 +81,13 @@ class CustomerHome extends StatelessWidget {
               },
             ),
             ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Update Info"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.lock),
               title: Text("Logout"),
               onTap: () {

@@ -23,6 +23,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   DatabaseReference databaseReference;
   int radioValue = 0;
 
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +31,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     user = User("", "", "", "", "","","","");
     databaseReference = database.reference().child("Users");
   }
+
 
   void handleRadioValueChanged(int value) {
     setState(() {

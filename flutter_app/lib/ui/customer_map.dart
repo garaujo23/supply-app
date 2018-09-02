@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart' as geoloc;
 import 'package:map_view/map_view.dart';
-
 import '../main.dart';
 import '../ui/ensure_visible.dart';
 import '../ui/login_screen.dart';
@@ -50,6 +49,7 @@ class _CustomerMapState extends State<CustomerMap> {
       'address': address,
       'key': API_KEY
     }); //Address hardcoded for now until data issue sorted
+
     final http.Response response = await http.get(uri);
     final decodedResponse = json.decode(response.body);
     //print(decodedResponse);
@@ -65,14 +65,25 @@ class _CustomerMapState extends State<CustomerMap> {
         longitude: coords['lng']);
     //longitude: currentLocation['longitude']);
 
+    final Uri uri2 = Uri.https('maps.googleapis.com', '/maps/api/distancematrix/json', {
+      'origin_addresses': '-37.839328,145.135399',
+      'destination_addresses': '${_locationData.latitude},${_locationData.longitude}',
+      'key': API_KEY
+    });
+    final http.Response response2 = await http.get(uri2);
+    final decodedResponse2 = json.decode(response2.body);
+    print(decodedResponse2);
+
     final StaticMapProvider staticMapProvider = StaticMapProvider(API_KEY);
     final Uri staticMapUri = staticMapProvider.getStaticUriWithMarkers([
       Marker('position', 'Position', _locationData.latitude,
           _locationData.longitude),
+      Marker('position', 'Position', currentLocation['latitude'],
+          currentLocation['longitude']),
     ],
         center: Location(_locationData.latitude, _locationData.longitude),
         width: 900,
-        height: 300,
+        height: 400,
         maptype: StaticMapViewType.roadmap);
     setState(() {
       _addressInputController.text = _locationData.address;
@@ -113,7 +124,7 @@ class _CustomerMapState extends State<CustomerMap> {
             ),
 
             SizedBox(
-              height: 10.0,
+              height: 5.0,
             ),
             _staticMapUri == null
                 ? Container()

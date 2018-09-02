@@ -53,7 +53,7 @@ class SupplierHome extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.settings),
-                title: Text("Settings"),
+                title: Text("Update Info"),
                 onTap: () {
                   Navigator.pop(context);
                 },
