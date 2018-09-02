@@ -66,8 +66,8 @@ class _CustomerMapState extends State<CustomerMap> {
     //longitude: currentLocation['longitude']);
 
     final Uri uri2 = Uri.https('maps.googleapis.com', '/maps/api/distancematrix/json', {
-      'origin_addresses': '-37.839328,145.135399',
-      'destination_addresses': '${_locationData.latitude},${_locationData.longitude}',
+      'origins': '-37.839328,145.135399',
+      'destinations': '${_locationData.latitude},${_locationData.longitude}',
       'key': API_KEY
     });
     final http.Response response2 = await http.get(uri2);
