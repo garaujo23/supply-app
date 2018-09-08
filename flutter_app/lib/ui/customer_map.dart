@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart' as geoloc;
 import 'package:map_view/map_view.dart';
+import 'package:map_view/polygon.dart';
+import 'package:map_view/polyline.dart';
 
 import '../main.dart';
 import '../ui/login_screen.dart';
@@ -46,6 +48,7 @@ class _CustomerMapState extends State<CustomerMap> {
     }
     // String API_KEY = ''; //This is already defined in main.dart so therefore do not need this here again
     final location = geoloc.Location();
+    DateTime now = new DateTime.now();
     final currentLocation = await location.getLocation();
     //print(data['Company Address']); This prints null
     final Uri uri = Uri.https('maps.googleapis.com', '/maps/api/geocode/json', {
@@ -77,12 +80,11 @@ class _CustomerMapState extends State<CustomerMap> {
     });
     final http.Response response2 = await http.get(uri2);
     final decodedResponse2 = json.decode(response2.body);
-
+    //print(decodedResponse2);
     final distance = decodedResponse2['rows'][0]['elements'][0]['distance'];
     final duration = decodedResponse2['rows'][0]['elements'][0]['duration'];
     final origin = decodedResponse2['origin_addresses'][0];
     final destination = decodedResponse2['destination_addresses'][0];
-
     _routeInfo =
         RouteInfo(duration['text'], distance['text'], destination, origin);
 
@@ -101,6 +103,7 @@ class _CustomerMapState extends State<CustomerMap> {
       _addressInputController.text = _locationData.address;
       _staticMapUri = staticMapUri;
     });
+
   }
 
   void _updateLocation() {
@@ -109,6 +112,7 @@ class _CustomerMapState extends State<CustomerMap> {
       //getStaticMap(data['Company Address']);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +168,6 @@ class _CustomerMapState extends State<CustomerMap> {
                     ),
                   ]),
             ])
-
 //        body: new Column(
 //          mainAxisAlignment: MainAxisAlignment.start,
 //          children: <Widget>[

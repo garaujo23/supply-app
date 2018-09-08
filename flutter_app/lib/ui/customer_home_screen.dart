@@ -100,8 +100,6 @@ class CustomerHome extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: Colors.deepPurple.shade100,
-        child: Text("Current Location: "),
       ),
     );
     /*void showMap() {
