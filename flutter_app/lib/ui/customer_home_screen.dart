@@ -40,9 +40,18 @@ class CustomerHome extends StatelessWidget {
                   ),
                   Padding(padding: const EdgeInsets.only(top: 10.0)),
                   Text(
-                    "${data['First Name']} ${data['Last Name']} \n${data['Company Name']} \n${data['Company Address']}",
+                    "${data['First Name']} ${data['Last Name']}",
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    "${data['Company Name']} \n${data['Company Address']}",
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 12.0,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),

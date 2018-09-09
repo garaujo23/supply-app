@@ -19,18 +19,18 @@ class Home extends StatelessWidget {
         child: new ListView(
           padding: const EdgeInsets.all(7.0),
           children: <Widget>[
-            new Padding(padding: const EdgeInsets.all(15.0)),
+            new Padding(padding: const EdgeInsets.all(15.0),child:
             new Image.asset(
               "images/758.png",
               height: 133.0,
               width: 200.0,
               color: Colors.white,
-            ),
+            ),),
             new Container(
               child: new Column(
                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  new Padding(padding: const EdgeInsets.all(30.0)),
+                  new Padding(padding: const EdgeInsets.all(30.0),child:
                   new Text(
                     "LOGIN",
                     style: new TextStyle(
@@ -40,8 +40,8 @@ class Home extends StatelessWidget {
                       fontStyle: FontStyle.normal,
                     ),
                     textAlign: TextAlign.center,
-                  ),
-                  new Padding(padding: const EdgeInsets.all(14.0)),
+                  ),),
+                  new Padding(padding: const EdgeInsets.all(14.0),child:
                   new InkWell(
                     onTap: () {
                       userType = "Customer";
@@ -66,8 +66,8 @@ class Home extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  new Padding(padding: const EdgeInsets.all(14.0)),
+                  ),),
+                  new Padding(padding: const EdgeInsets.all(14.0),child:
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -79,7 +79,7 @@ class Home extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      new Padding(padding: const EdgeInsets.all(5.0)),
+                      new Padding(padding: const EdgeInsets.all(5.0),child:
                       new Text(
                         "OR",
                         style: new TextStyle(
@@ -88,8 +88,7 @@ class Home extends StatelessWidget {
                           color: Colors.white,
                           fontStyle: FontStyle.normal,
                         ),
-                      ),
-                      new Padding(padding: const EdgeInsets.all(5.0)),
+                      ),),
                       new Text(
                         "--------------------------------",
                         style: new TextStyle(
@@ -99,8 +98,8 @@ class Home extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                  new Padding(padding: const EdgeInsets.all(14.0)),
+                  ),),
+                  new Padding(padding: const EdgeInsets.all(14.0),child:
                   new InkWell(
                     onTap: () {
                       userType = "Supplier";
@@ -125,8 +124,8 @@ class Home extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  new Padding(padding: const EdgeInsets.all(20.0)),
+                  ),),
+                  new Padding(padding: const EdgeInsets.only(top: 100.0),child:
                   new FlatButton(
                     color: Colors.white,
                     onPressed: () {
@@ -142,7 +141,7 @@ class Home extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
+                  ),),
                 ],
               ),
             ),

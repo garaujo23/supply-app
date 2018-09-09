@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../model/user.dart';
 
@@ -8,13 +9,15 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 String userUid;
 Map<dynamic, dynamic> data;
+
 class LoginScreen extends StatefulWidget {
   final type;
 
   LoginScreen({this.type});
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final snackBar = new SnackBar(content: Text("Signing in!"));
+  final snackBar =
+      new SnackBar(content: Text("Signing in!", textAlign: TextAlign.center));
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -26,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseDatabase database = FirebaseDatabase.instance;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final snackBar = new SnackBar(content: Text("Signing in!"));
+  final snackBar = new SnackBar(content: Text("Signing in!", textAlign: TextAlign.center));
 
   final TextEditingController _nameController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
@@ -51,29 +54,34 @@ class _LoginScreenState extends State<LoginScreen> {
         alignment: Alignment.topCenter,
         child: new ListView(
           children: <Widget>[
-            new Padding(padding: const EdgeInsets.all(15.0)),
-            //image/profile
-            new Image.asset(
-              'images/face.png',
-              width: 90.0,
-              height: 90.0,
-              color: Colors.white,
+            new Padding(
+              padding: const EdgeInsets.all(30.0),
+              child:
+                  //image/profile
+                  new Image.asset(
+                'images/face.png',
+                width: 90.0,
+                height: 90.0,
+                color: Colors.white,
+              ),
             ),
             //Form
-            new Padding(padding: const EdgeInsets.all(20.0)),
+            //new Padding(padding: const EdgeInsets.all(20.0)),
             new Container(
               height: 240.0,
               width: 380.0,
               color: Colors.blueGrey.shade50,
               child: new ListView(
                 children: <Widget>[
-                  new Padding(padding: const EdgeInsets.all(4.0)),
-                  new TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _nameController,
-                    decoration: new InputDecoration(
-                        labelText: "${widget.type.toString()} Email",
-                        icon: new Icon(Icons.person)),
+                  new Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: new TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _nameController,
+                      decoration: new InputDecoration(
+                          labelText: "${widget.type.toString()} Email",
+                          icon: new Icon(Icons.person)),
+                    ),
                   ),
                   new TextField(
                     controller: _passwordController,
@@ -97,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //                            onPressed: () => debugPrint ("Login Pressed"),
                             onPressed: () {
                               _scaffoldKey.currentState.showSnackBar(snackBar);
+                              SystemChannels.textInput.invokeMethod('TextInput.hide');
                               _logInUser();
                             },
                             color: Colors.blueGrey,
@@ -129,19 +138,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-                  new Padding(padding: new EdgeInsets.all(10.0)),
-                  new InkWell(
-                    onTap: () {
-                      _passwordReset();
-                    },
-                    child: Text(
-                      "Forgot Password",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w300,
-                        decoration: TextDecoration.underline,
+                  new Padding(
+                    padding: new EdgeInsets.all(20.0),
+                    child: new InkWell(
+                      onTap: () {
+                        _passwordReset();
+                      },
+                      child: Text(
+                        "Forgot Password",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w300,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                   ),
@@ -195,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .child(currentUser.uid)
         .once()
         .then((DataSnapshot snapshot) {
-       data = snapshot.value;
+      data = snapshot.value;
 // Checking to see if the user type is the same as the login type the user selected
       if (data['User Type'] == widget.type.toString()) {
         if (widget.type.toString() == "Customer") {

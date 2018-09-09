@@ -8,6 +8,7 @@ import './ui/supplier_home_screen.dart';
 import './ui/add_customer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/rendering.dart.';
 
 FirebaseUser currentUser;
 
@@ -17,11 +18,12 @@ void main() {
 
   MapView.setApiKey(API_KEY);
   //Use for debugging UI
-  // debugPaintSizeEnabled = true;
+  //debugPaintSizeEnabled = true;
   // debugPaintBaselinesEnabled = true;
   // debugPaintPointersEnabled = true;
   //MapView.setApiKey(API_KEY);
   runApp(new MaterialApp(
+    debugShowCheckedModeBanner: false,
     //UI Settings for whole app
     theme: ThemeData(
         brightness: Brightness.light,

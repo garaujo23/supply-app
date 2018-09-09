@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -78,11 +79,17 @@ class _CustomerMapState extends State<CustomerMap> {
       'destinations': '${_locationData.latitude},${_locationData.longitude}',
       'key': API_KEY
     });
+    var thisInstant = new DateTime.now();
+    print(thisInstant);
     final http.Response response2 = await http.get(uri2);
     final decodedResponse2 = json.decode(response2.body);
     //print(decodedResponse2);
     final distance = decodedResponse2['rows'][0]['elements'][0]['distance'];
     final duration = decodedResponse2['rows'][0]['elements'][0]['duration'];
+    String test = duration['text'];
+    List<String> hoursMinutes = test.split(" ");
+    print(hoursMinutes[0]);
+    //var test2 = thisInstant.add(new Duration(minutes: hoursMinutes[0]));
     final origin = decodedResponse2['origin_addresses'][0];
     final destination = decodedResponse2['destination_addresses'][0];
     _routeInfo =
@@ -118,7 +125,7 @@ class _CustomerMapState extends State<CustomerMap> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Map View"),
+          title: Text("Delivery"),
           centerTitle: true,
           backgroundColor: Theme.of(context).primaryColor,
         ),
@@ -129,43 +136,42 @@ class _CustomerMapState extends State<CustomerMap> {
               Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
+                    new Padding(padding: const EdgeInsets.all(30.0),
+                    child:
+                    Text(
+                      "Your delivery is ${_routeInfo.duration} away",
+                      style: TextStyle(
+
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),),
                     _staticMapUri == null
                         ? Container()
                         : Image.network(_staticMapUri.toString()),
-                    new Padding(padding: const EdgeInsets.all(10.0)),
+                    new Padding(padding: const EdgeInsets.all(10.0),child:
                     new Center(
                       child: Text(
-                        "Origin: ${_routeInfo.origin}",
+                        "Delivery driver: ${_routeInfo.origin}",
                         style: TextStyle(
                           fontSize: 14.0,
-                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),
-                    new Padding(padding: const EdgeInsets.all(10.0)),
+                    ),),
+                    new Padding(padding: const EdgeInsets.all(10.0),child:
                     Text(
-                      "Destination: ${_routeInfo.destination}",
+                      "Your shop: ${_routeInfo.destination}",
                       style: TextStyle(
                         fontSize: 14.0,
-                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                    new Padding(padding: const EdgeInsets.all(10.0)),
+                    ),),
+                    new Padding(padding: const EdgeInsets.all(10.0),child:
                     Text(
-                      "Distance from Origin: ${_routeInfo.distance}",
+                      "Distance from you: ${_routeInfo.distance}",
                       style: TextStyle(
                         fontSize: 14.0,
-                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                    new Padding(padding: const EdgeInsets.all(10.0)),
-                    Text(
-                      "Estimated Time: ${_routeInfo.duration}",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    ),),
                   ]),
             ])
 //        body: new Column(
